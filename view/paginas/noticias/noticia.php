@@ -36,14 +36,27 @@
             $com = new Comentario();
             $comentarios=$com->listar($noticia->id);
 
-            foreach($comentarios as $comentario){
+            if($comentarios){
+                foreach($comentarios as $comentario){
         ?>
         <div class="coments">
             <p class="nome-user"><?php echo $comentario->nome?></p>
             <p class="coment-user"><?php echo $comentario->comentario?> </p>
+        <?php
+        if(isset($_SESSION['nome'])){
+            if($comentario->nome==$_SESSION['nome']){
+        ?>
+                <a href="<?php echo HOME_URI; ?>comentario/apagar/<?php echo $comentario->id ?>/<?php echo $noticia->id ?>/<?php echo $comentario->nome ?>">
+                    <button type="button" class="btn btn-danger"><i class='fas fa-window-close'></i></button>
+                </a>
+        <?php
+            }
+        }
+        ?>
         </div>
 
         <?php
+                }
             }
         ?>
 
