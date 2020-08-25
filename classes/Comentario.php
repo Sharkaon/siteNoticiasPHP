@@ -167,4 +167,33 @@ class Comentario{
 
         return $comentarios;
     }
+    
+    /**
+     * Método responsável por listar os comentários
+     * @access public
+     * @author Artur
+     * @since 21/08/2020
+     * @version 0.2
+    */
+    public  function apagar($id, $noticia, $nome){
+        if(isset($_SESSION['email'])){
+            if($nome==$_SESSION['nome']){
+
+                $mysql= Conexao::getConexao();
+                $excluir = "DELETE FROM comentario WHERE id='$id'";
+                
+                if($mysql->query($excluir)){
+                    
+                    header("location:".HOME_URI."noticia/ver/$noticia");
+                }else{
+                    echo "Falha na operação";
+                    echo "<br>Clique <a href='".HOME_URI."noticia/ver/$noticia'>aqui</a> para retornar";
+                }
+                echo "Esse não é seu comentário!";
+                echo "<br>Clique <a href='".HOME_URI."noticia/ver/$noticia'>aqui</a> para retornar";
+            }
+        }else{
+            header("location:index");
+        }
+    }
 }
